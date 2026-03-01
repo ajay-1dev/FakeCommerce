@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: FakeCommerce
+  datasource:
+    url: ${path}
+    username: ${username}
+    password: ${sqlpasscode}
+    driver-class-name: ${driver_class_name}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: ${port:8081}
