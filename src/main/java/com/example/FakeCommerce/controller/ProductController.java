@@ -68,18 +68,7 @@ public class ProductController {
         productService.delteProduct(id);
         return "product delted successfully";
     }
-
-    @GetMapping("search")
-    //(for reference):http://localhost:{port number}/api/v1/products/search?categoryName=kitchenware
-    public List<Product> getMethodName(@RequestParam("categoryName") String category,@RequestParam(required = false, name ="mypage") Integer page) {
-        return productService.getProductsByCatergory(category);
-    }
-    
-    @GetMapping("category")
-    public List<String> getAllCategory() {
-        return productService.getAllCategory();
-    }
-    
+   
     @PutMapping("edit/{id}")
     public EditProductDto putMethodName(@PathVariable("id") Long id, @RequestBody EditProductDto dto) {
         return productService.editProduct(id, dto);

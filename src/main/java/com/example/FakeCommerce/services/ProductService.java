@@ -41,10 +41,9 @@ public class ProductService {
         .image(ref.getImage())
         .price(ref.getPrice())
         .rating(ref.getRating())
-        .title(ref.getRating())
+        .title(ref.getTitle())
         .build();
         return ans;
-
     }
 
     public Product createProduct(CreateProductRequestDto dto){
@@ -64,14 +63,6 @@ public class ProductService {
 
     public void delteProduct(Long id){
         productRepository.deleteById(id);
-    }
-
-    public List<Product> getProductsByCatergory(String category){
-        return productRepository.findByCategory(category);
-    }
-
-    public List<String> getAllCategory(){
-        return productRepository.findAllCategories();
     }
 
     public List<ProductResponceDto> getProductDto(){
