@@ -1,6 +1,7 @@
 package com.example.FakeCommerce.schema;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
 
@@ -11,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -43,4 +46,5 @@ public class Product extends BaseEntity {
     private Category category;
 
     private String rating;
+
 }

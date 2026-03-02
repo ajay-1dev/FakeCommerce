@@ -13,6 +13,7 @@ import com.example.FakeCommerce.dtos.ProductResponceDto;
 import com.example.FakeCommerce.repositiories.ProductRepository;
 import com.example.FakeCommerce.schema.Category;
 import com.example.FakeCommerce.schema.Product;
+import com.example.FakeCommerce.dtos.EditProductDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -94,5 +95,19 @@ public class ProductService {
 
     public List<Product> getProducts(){
         return productRepository.getAllProducts();
+    }
+    
+    public EditProductDto editProduct(Long id,EditProductDto dto){
+        Product ref = productRepository.findById(id).orElseThrow(() -> new RuntimeException("product not found"));
+        Category category = categoryService.getCategoryById(dto.getId());
+        ref.setDescription(dto.getDescription());
+        ref.setPrice(dto.getPrice());
+        ref.setImage(dto.getImage());
+        ref.setRating(dto.getRating());
+        ref.setTitle(dto.getTitle());
+        ref.setCategory(category);
+
+        productRepository.save(ref);
+        return dto;
     }
 }

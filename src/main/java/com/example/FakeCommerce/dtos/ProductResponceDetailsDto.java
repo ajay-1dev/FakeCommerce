@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class ProductResponceDetailsDto {
-        private String title;
+    private String title;
 
     private String description;
 
