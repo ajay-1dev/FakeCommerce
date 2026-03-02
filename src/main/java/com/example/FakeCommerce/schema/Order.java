@@ -3,6 +3,8 @@ package com.example.FakeCommerce.schema;
 import java.util.List;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -18,16 +20,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Table(name = "orders")
+@SQLDelete(sql = "UPDATE orders set deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLRestriction("deleted_at IS Null")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order extends BaseEntity {
+
     private OrderStatus status;
 
-    @ManyToMany
-    @JoinTable(
-        name = "order_products",
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-        )
-    private List<Product> product;
 }
