@@ -29,7 +29,7 @@ public class BaseEntity {
     private Long id; //primary key
 
     @CreatedDate
-    @Column(name = "created_date",nullable = false,updatable = false)
+    @Column(name = "created_at",nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

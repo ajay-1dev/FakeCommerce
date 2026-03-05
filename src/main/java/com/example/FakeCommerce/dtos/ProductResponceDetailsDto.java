@@ -21,5 +21,5 @@ public class ProductResponceDetailsDto {
 
     private String image;
 
-    private String rating;
+    private BigDecimal rating;
 }

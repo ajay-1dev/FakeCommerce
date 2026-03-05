@@ -4,6 +4,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,6 @@ import lombok.NoArgsConstructor;
 @SQLDelete(sql = "UPDATE categories SET deleted_at = CURRENT_TIMESTAMP where id = ?")
 @SQLRestriction("deleted_at IS NULL")
 public class Category extends BaseEntity {
-    
-
+    @Column(nullable = false)
     private String name;
 }
