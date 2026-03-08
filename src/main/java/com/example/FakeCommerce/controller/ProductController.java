@@ -58,6 +58,11 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @GetMapping("categories/{id}")
+    public List<Product> getProductsByCategory(@PathVariable("id") Long id){
+        return productService.getProductByCategory(id);
+    }
+
     @PostMapping()
     public Product createProduct(@RequestBody CreateProductRequestDto dto) {
         return productService.createProduct(dto);
@@ -73,4 +78,5 @@ public class ProductController {
     public EditProductDto putMethodName(@PathVariable("id") Long id, @RequestBody EditProductDto dto) {
         return productService.editProduct(id, dto);
     }
+
 }

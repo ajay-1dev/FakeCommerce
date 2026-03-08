@@ -7,6 +7,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Order extends BaseEntity {
 
+    @Enumerated(EnumType.ORDINAL)
     private OrderStatus status;
 
 }

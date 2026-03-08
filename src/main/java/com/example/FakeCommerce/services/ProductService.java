@@ -101,4 +101,9 @@ public class ProductService {
         productRepository.save(ref);
         return dto;
     }
+
+
+    public List<Product> getProductByCategory(Long id){
+        return productRepository.getProductBycategories(id);
+    }
 }
