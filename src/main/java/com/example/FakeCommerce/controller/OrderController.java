@@ -3,6 +3,7 @@ package com.example.FakeCommerce.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.FakeCommerce.dtos.CreateOrderRequestDTO;
 import com.example.FakeCommerce.dtos.OrderDto;
 import com.example.FakeCommerce.schema.Order;
 import com.example.FakeCommerce.services.OrderService;
@@ -39,8 +40,8 @@ public class OrderController {
     
 
     @PostMapping()
-    public Order createOrder(@RequestBody OrderDto order) {        
-        return orderService.createOrder(order);
+    public void createOrder(@RequestBody CreateOrderRequestDTO createOrderRequestDTO) {        
+        orderService.createOrder(createOrderRequestDTO);
     }
 
     @DeleteMapping("{id}")
