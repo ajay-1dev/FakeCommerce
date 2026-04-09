@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.FakeCommerce.dtos.CreateProductRequestDto;
 import com.example.FakeCommerce.dtos.ProductDetailsResponceIdDto;
 import com.example.FakeCommerce.dtos.ProductResponceDto;
+import com.example.FakeCommerce.exeptions.ResourceNotFoundException;
 import com.example.FakeCommerce.repositiories.ProductRepository;
 import com.example.FakeCommerce.schema.Category;
 import com.example.FakeCommerce.schema.Product;
@@ -29,8 +30,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long id){
-        return productRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Product not found"));
+        return productRepository.findByProductId(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Product not found with this id : "+id));
     }
 
     public ProductDetailsResponceIdDto getProductDtoById(Long id){
