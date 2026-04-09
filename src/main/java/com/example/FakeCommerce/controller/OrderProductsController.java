@@ -3,6 +3,7 @@ package com.example.FakeCommerce.controller;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +35,14 @@ public class OrderProductsController{
     }
 
     @GetMapping("{id}")
-    public OrderProducts getOrderProductsById(@PathVariable("id") Long id) {
-        return orderProductsService.getOrderProductById(id);
+    public ResponseEntity<ApiResponse<OrderProducts>> getOrderProductsById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ApiResponse.success(orderProductsService.getOrderProductById(id), "Fetched Sucessfully with this is : "+id));
     }
     
-    @PostMapping("")
-    public OrderProducts createOrderProducts(@RequestBody OrderProductsDto entity) {        
-        return orderProductsService.createOrderProducts(entity);
+    @PostMapping()
+    public ResponseEntity<ApiResponse<OrderProducts>> createOrderProducts(@RequestBody OrderProductsDto entity) {        
+        return ResponseEntity.status(HttpStatus.CREATED)
+        .body(ApiResponse.success(orderProductsService.createOrderProducts(entity), "Fetched Sucessfully"));
     }
     
     
