@@ -3,12 +3,14 @@ package com.example.FakeCommerce.controller;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.FakeCommerce.dtos.OrderProductsDto;
 import com.example.FakeCommerce.schema.OrderProducts;
 import com.example.FakeCommerce.services.OrderProductsService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +28,9 @@ public class OrderProductsController{
  
     private final OrderProductsService orderProductsService;
 
-    @GetMapping("")
-    public List<OrderProducts> getAllOrderProducts() {
-        return orderProductsService.getAllOrderProducts();
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<OrderProducts>>> getAllOrderProducts() {
+        return ResponseEntity.ok(ApiResponse.success(orderProductsService.getAllOrderProducts(), "Fetched All orderproducts"));
     }
 
     @GetMapping("{id}")

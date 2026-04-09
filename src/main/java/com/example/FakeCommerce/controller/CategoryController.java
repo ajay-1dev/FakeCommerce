@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.FakeCommerce.dtos.CreateCategoryRequestDto;
 import com.example.FakeCommerce.schema.Category;
 import com.example.FakeCommerce.services.CategoryService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,17 +42,20 @@ public class CategoryController {
     }
     
     @GetMapping()
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public ResponseEntity<ApiResponse<List<Category>>> getAllCategories() {
+        return ResponseEntity.status(HttpStatus.OK)
+        .body(ApiResponse.success(categoryService.getAllCategories(), "null"));
     }
 
     @GetMapping("{id}")
-    public Category getcategoryById(@PathVariable("id") Long id){
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<ApiResponse<Category>> getcategoryById(@PathVariable("id") Long id){
+        return ResponseEntity.status(0)
+        .body(ApiResponse.success(categoryService.getCategoryById(id),""));
     }
     
     @DeleteMapping("{id}")
-    public void deleteCategoryById(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteCategoryById(@PathVariable("id") Long id){
         categoryService.deleteCategory(id);
-    }
+        return ResponseEntity.ok("Deleted Sucesfully");
+}
 }

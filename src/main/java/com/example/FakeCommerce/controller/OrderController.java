@@ -36,19 +36,22 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping()
-    public List<Order> getOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<ApiResponse<List<Order>>> getOrders() {
+        return ResponseEntity.status(HttpStatus.CREATED)
+        .body(ApiResponse.success(orderService.getAllOrders()," Order Created sucess fully"));
     }
 
     @GetMapping("{id}")
-    public Order getOrderById(@PathVariable("id") Long id) {
-        return orderService.getOrderById(id);
+    public ResponseEntity<ApiResponse<Order>> getOrderById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ApiResponse.success(orderService.getOrderById(id),"the order details of the id :"+id));
     }
     
 
     @PostMapping()
-    public GetOrderResponseDTO createOrder(@RequestBody CreateOrderRequestDTO createOrderRequestDTO) {        
-        return orderService.createOrder(createOrderRequestDTO);
+    public ResponseEntity<ApiResponse<GetOrderResponseDTO>> createOrder(@RequestBody CreateOrderRequestDTO createOrderRequestDTO) {   
+
+        GetOrderResponseDTO response = orderService.createOrder(createOrderRequestDTO);  
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponse.success(response,"Created Sucessfully"));
     }
 
     @PutMapping("{id}")
@@ -58,8 +61,8 @@ public class OrderController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteOrder(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteOrder(@PathVariable("id") Long id){
         orderService.deleteOrder(id);
-        System.out.println("Order Sucessfully Deleted");
+        return ResponseEntity.ok("Deleted sucessfully with this id"+id);
     }
 }

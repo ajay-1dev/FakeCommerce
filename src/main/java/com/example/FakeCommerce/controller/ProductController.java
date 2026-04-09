@@ -9,12 +9,15 @@ import com.example.FakeCommerce.dtos.ProductDetailsResponceIdDto;
 import com.example.FakeCommerce.dtos.ProductResponceDto;
 import com.example.FakeCommerce.schema.Product;
 import com.example.FakeCommerce.services.ProductService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,51 +35,53 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping()
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<ApiResponse<List<Product>>> getAllProducts() {
+        return ResponseEntity.ok(ApiResponse.success(productService.getAllProducts(), "All Products Details"));
     }
 
     @GetMapping("/dto")
-    public List<ProductResponceDto> getAllProductsDto() {
-        return productService.getProductDto();
+    public ResponseEntity<ApiResponse<List<ProductResponceDto>>> getAllProductsDto() {
+        return ResponseEntity.ok(ApiResponse.success(productService.getProductDto(),"Products details"));
     }
 
     @GetMapping("/dto/{id}")
-    public ProductDetailsResponceIdDto getMethodName(@PathVariable("id") Long id) {
-        return productService.getProductDtoById(id);
+    public ResponseEntity<ApiResponse<ProductDetailsResponceIdDto>> getMethodName(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ApiResponse.success(productService.getProductDtoById(id), "Product details of the id : "+id));
     }
     
 
     @GetMapping("/p")
-    public List<Product> getProducts() {
-        return productService.getProducts();
+    public ResponseEntity<ApiResponse<List<Product>>> getProducts() {
+        return ResponseEntity.ok(ApiResponse.success(productService.getProducts(),"All products details"));
     }
     
 
     @GetMapping("{id}")
-    public Product getProduct(@PathVariable("id") Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<ApiResponse<Product>> getProduct(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(ApiResponse.success(productService.getProductById(id), "Product details of the id : "+id));
     }
 
     @GetMapping("categories/{id}")
-    public List<Product> getProductsByCategory(@PathVariable("id") Long id){
-        return productService.getProductByCategory(id);
+    public ResponseEntity<ApiResponse<List<Product>>> getProductsByCategory(@PathVariable("id") Long id){
+        return ResponseEntity.ok(ApiResponse.success(productService.getProductByCategory(id),"Fetching details with category id"));
     }
 
     @PostMapping()
-    public Product createProduct(@RequestBody CreateProductRequestDto dto) {
-        return productService.createProduct(dto);
+    public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody CreateProductRequestDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+        .body(ApiResponse.success(productService.createProduct(dto),"Product created Sucessfully"));
     }
 
     @DeleteMapping("{id}")
-    public String deleteProductById(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteProductById(@PathVariable("id") Long id){
         productService.deleteProduct(id);
-        return "product delted successfully";
+        return ResponseEntity.ok("product delted successfully");
     }
    
     @PutMapping("edit/{id}")
-    public EditProductDto putMethodName(@PathVariable("id") Long id, @RequestBody EditProductDto dto) {
-        return productService.editProduct(id, dto);
+    public ResponseEntity<ApiResponse<EditProductDto>> putMethodName(@PathVariable("id") Long id, @RequestBody EditProductDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+        .body(ApiResponse.success(productService.editProduct(id, dto), "Product Updated sucessfully"));
     }
 
 }
