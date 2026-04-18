@@ -2,6 +2,7 @@ package com.example.FakeCommerce.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
@@ -14,6 +15,7 @@ import com.example.FakeCommerce.exeptions.ResourceNotFoundException;
 import com.example.FakeCommerce.repositiories.ProductRepository;
 import com.example.FakeCommerce.schema.Category;
 import com.example.FakeCommerce.schema.Product;
+import com.example.FakeCommerce.services.cache.ProductRedisCache;
 import com.example.FakeCommerce.dtos.EditProductDto;
 
 import lombok.RequiredArgsConstructor;
@@ -24,17 +26,38 @@ public class ProductService {
     
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
+    private final ProductRedisCache productRedisCache;
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
 
-    public Product getProductById(Long id){
-        return productRepository.findByProductId(id)
+    public ProductDetailsResponceIdDto getProductById(Long id){
+        Optional<ProductDetailsResponceIdDto> cachedSummary = productRedisCache
+        .getSummary(id);
+        if(cachedSummary.isPresent()){
+            return cachedSummary.get();
+        }
+
+        Product product= productRepository.findByProductId(id)
         .orElseThrow(() -> new ResourceNotFoundException("Product not found with this id : "+id));
+        ProductDetailsResponceIdDto productDetailsResponceIdDto = ProductDetailsResponceIdDto.builder()
+        .Category_name(product.getCategory().getName())
+        .description(product.getDescription())
+        .price(product.getPrice())
+        .title(product.getTitle())
+        .id(id)
+        .image(product.getImage())
+        .rating(product.getRating())
+        .build();
+        
+        productRedisCache.putSummary(id, productDetailsResponceIdDto);
+        return productDetailsResponceIdDto;
     }
 
     public ProductDetailsResponceIdDto getProductDtoById(Long id){
+
+
         Product ref = productRepository.getProductByIds(id).get(0);
         ProductDetailsResponceIdDto ans = ProductDetailsResponceIdDto.builder()
         .Category_name(ref.getCategory().getName())
@@ -44,6 +67,7 @@ public class ProductService {
         .rating(ref.getRating())
         .title(ref.getTitle())
         .build();
+
         return ans;
     }
 
