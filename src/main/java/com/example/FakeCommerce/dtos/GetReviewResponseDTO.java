@@ -1,28 +1,24 @@
 package com.example.FakeCommerce.dtos;
 
 import java.math.BigDecimal;
-
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-public class ProductResponceDetailsDto {
+@NoArgsConstructor
+@Builder
+public class GetReviewResponseDTO {
 
     private Long id;
-    
-    private String title;
-
-    private String description;
-
-    private BigDecimal price;
-
-    private String image;
-
+    private Long productId;
+    private Long orderId;
     private BigDecimal rating;
+    private String comment;
+    private LocalDateTime createdAt;
 }
