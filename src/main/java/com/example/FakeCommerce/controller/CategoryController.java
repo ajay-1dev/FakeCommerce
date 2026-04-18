@@ -49,7 +49,7 @@ public class CategoryController {
 
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<Category>> getcategoryById(@PathVariable("id") Long id){
-        return ResponseEntity.status(0)
+        return ResponseEntity.status(HttpStatus.OK)
         .body(ApiResponse.success(categoryService.getCategoryById(id),""));
     }
     

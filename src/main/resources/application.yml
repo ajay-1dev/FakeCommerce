@@ -13,6 +13,9 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migrations
-
+  data:
+    redis:
+      host: ${redis_host}
+      port: ${redis_port}
 server:
   port: ${port:8081}

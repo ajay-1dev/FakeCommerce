@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.FakeCommerce.dtos.CreateProductRequestDto;
 import com.example.FakeCommerce.dtos.EditProductDto;
 import com.example.FakeCommerce.dtos.ProductDetailsResponceIdDto;
+import com.example.FakeCommerce.dtos.ProductResponceDetailsDto;
 import com.example.FakeCommerce.dtos.ProductResponceDto;
 import com.example.FakeCommerce.schema.Product;
 import com.example.FakeCommerce.services.ProductService;
@@ -57,7 +58,7 @@ public class ProductController {
     
 
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<Product>> getProduct(@PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponse<ProductResponceDetailsDto>> getProduct(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ApiResponse.success(productService.getProductById(id), "Product details of the id : "+id));
     }
 
